@@ -1,0 +1,3 @@
+# runtime cache (created under $TMPDIR, never in-repo, but ignore stray copies)
+claude-statusline-usage-*.json
+*.tmp
