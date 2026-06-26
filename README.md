@@ -4,9 +4,11 @@ A two-line [Claude Code](https://claude.com/claude-code) status line, built on t
 official `statusLine` contract — a drop-in replacement for `cship` that needs no
 extra binary, just `bash`, `jq`, and `curl`.
 
+![claude-statusline example](img/1.png)
+
 ```
-~/Projects/komunalka on  feat/provider-accounts [!]  🕐 10:38
-🤖 Opus 4.8  🧠 high  💰 $1.85  █████░░░░░ 57%  ⌛ 5h 35% (1h23m)  📅 7d 15% (6d5h)  🟢 Sonnet 1% (6d5h)  📝 +120/-34
+~/Projects/claude-statusline on  master  🕐 11:31
+🤖 Opus 4.8  🧠 high  💰 $9.57  ██░░░░░░░░ 19%  ⌛ 5h 61% (58m)  📅 7d 18% (6d2h)  🟢 Sonnet 2% (6d2h)  📝 +228/-19
 ```
 
 **Line 1** — working directory · git branch + dirty flags · language versions · clock
