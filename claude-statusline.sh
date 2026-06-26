@@ -87,7 +87,7 @@ LINE1+=" ${C_TIME}🕐 $(date +%H:%M)${R}"
 LINE2="${C_MODEL}🤖 ${MODEL}${R}"
 [ -n "$EFFORT" ] && LINE2+="  ${C_EFFORT}🧠 ${EFFORT}${R}"
 costp="$(printf '%.2f' "$COST" 2>/dev/null || echo 0.00)"
-case "$(pick "$costp" 2 5)" in crit) cc=$C_CRIT;; warn) cc=$C_WARN;; *) cc=$C_BASE;; esac
+case "$(pick "$costp" 10 25)" in crit) cc=$C_CRIT;; warn) cc=$C_WARN;; *) cc=$C_BASE;; esac
 LINE2+="  ${cc}💰 \$${costp}${R}"
 
 # ---- line 2: context bar ---------------------------------------------------
