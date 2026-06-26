@@ -11,9 +11,6 @@ extra binary, just `bash`, `jq`, and `curl`.
 🤖 Opus 4.8  🧠 high  💰 $9.57  ██░░░░░░░░ 19%  ⌛ 5h 61% (58m)  📅 7d 18% (6d2h)  🟢 Sonnet 2% (6d2h)  📝 +228/-19
 ```
 
-**Line 1** — working directory · git branch + dirty flags · language versions · clock
-**Line 2** — model · reasoning effort · session cost · context bar · usage limits · lines changed
-
 ---
 
 ## Features
@@ -23,8 +20,8 @@ extra binary, just `bash`, `jq`, and `curl`.
 - **Native context bar** using `context_window.used_percentage` — correct for both 200k and 1M windows.
 - **Usage limits** (5h / 7d, plus per-model weekly Opus/Sonnet/Cowork) via the OAuth usage API,
   with a **stdin fallback** for 5h/7d so the numbers survive even when the API is unavailable.
-- **Per-profile credentials** via `$CLAUDE_CONFIG_DIR` — one script serves personal and work
-  profiles, each showing its own limits, with no `HOME` tricks.
+- **Credentials** read from `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.credentials.json` for the
+  usage-limit lookups — no `HOME` tricks.
 - **Network-safe**: usage API is cached (45 s), refreshed in the background (never blocks a render),
   guarded by a single-flight lock (a burst of renders = one request), with a failure cooldown so a
   rate-limited/erroring API is not retried on every frame. Error responses are never cached.
@@ -57,23 +54,6 @@ install -Dm755 claude-statusline.sh ~/.config/claude-statusline.sh
 
 Or run `./install.sh`, which copies the script and prints the snippet to paste.
 
-### Two profiles (personal + work)
-
-If you run a second profile via `CLAUDE_CONFIG_DIR`, prefix the command so the script reads that
-profile's credentials (usage limits are per-account):
-
-```jsonc
-// ~/.claude-work/settings.json
-{
-  "statusLine": {
-    "type": "command",
-    "command": "CLAUDE_CONFIG_DIR=/home/you/.claude-work /home/you/.config/claude-statusline.sh"
-  }
-}
-```
-
-The same script file serves both — only the credential directory differs.
-
 ## What each segment means
 
 | Segment | Source | Notes |
@@ -100,7 +80,7 @@ The same script file serves both — only the credential directory differs.
 `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.credentials.json`. This endpoint is **undocumented**; treat
 it as best-effort. The token never leaves your machine except in that request to Anthropic.
 
-Caching lives in `${TMPDIR:-/tmp}/claude-statusline-usage-<hash>.json` (per profile):
+Caching lives in `${TMPDIR:-/tmp}/claude-statusline-usage-<hash>.json` (keyed by config dir):
 
 - **TTL 45 s**, refreshed in a backgrounded subshell so renders never block on the network.
 - **Single-flight lock** (atomic `mkdir`) — concurrent renders trigger at most one request.
