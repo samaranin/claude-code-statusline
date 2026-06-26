@@ -11,6 +11,10 @@ extra binary, just `bash`, `jq`, and `curl`.
 🤖 Opus 4.8  🧠 high  💰 $9.57  ██░░░░░░░░ 19%  ⌛ 5h 61% (58m)  📅 7d 18% (6d2h)  🟢 Sonnet 2% (6d2h)  📝 +228/-19
 ```
 
+**Line 1** — working directory · git branch + dirty flags · language versions · clock
+
+**Line 2** — model · reasoning effort · session cost · context bar · usage limits · lines changed
+
 ---
 
 ## Features
